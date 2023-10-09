@@ -10,23 +10,51 @@
 
   --font-big: 3rem;
   --font-med: 2rem;
-  --font-small: 1.5rem /*Font Config*/;
+  --font-small: 1.5rem;
+
+  --font-color: #000045;
+  --font-color-darkmode: #fcfcdb;
+  /*Font Config*/
+
+  /*Colors*/
+  --background-color: #fcfcdb;
+  --background-color-cards: #ebd5b3;
+  --border-color: #b54eb5;
+  --button-color: #b54eb5;
+  --separation-line-color: #b54eb5;
+  --button-color-negative: #e02345;
+
+  /*Border Thickness*/
+  --outside-border: 5px;
+  --inner-cards: 3px;
+  --separation-line-thickness: 3px;
+
+  /*Border Radius*/
+  --card-border-radius: 15px;
 }
 
 /*CSS Global*/
+
+html {
+  background-color: var(--background-color);
+  text-align: center;
+}
 
 /*Fonts*/
 
 .font-title {
   font-family: var(--font-title);
+  color: var(--font-color);
 }
 
 .font-text {
   font-family: var(--font-text);
+  color: var(--font-color);
 }
 
 .font-input {
   font-family: var(--font-input);
+  color: var(--font-color);
 }
 
 .font-big {
@@ -42,3 +70,27 @@
 }
 
 /*Fonts*/
+
+/*Cards*/
+
+.outer-card {
+  background-color: var(--background-color-cards);
+  border: var(--outside-border) solid var(--border-color);
+  border-radius: var(--card-border-radius);
+  padding: 1em;
+  margin: 1em;
+}
+
+.inner-card {
+  border: var(--inner-cards) solid var(--border-color);
+  border-radius: var(--card-border-radius);
+  padding: 1em;
+  margin: 1em;
+}
+
+.separation-line {
+  border-right: var(--separation-line-thickness) solid
+    var(--separation-line-color);
+}
+
+/*Cards*/
