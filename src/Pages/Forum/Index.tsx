@@ -12,25 +12,13 @@ const Forum = () => {
         return (
           <Card
             key={index}
+            photo={element.photo}
             user={element.user}
             date={element.date}
             postContent={element.postContent}
           />
         );
       })}
-
-      <Card
-        user="Usuário 1"
-        date="10/10/23-13:34"
-        postContent="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec luctus justo. Maecenas ultrices aliquam ante id ultrices. Nullam sollicitudin at magna id gravida. Morbi porta at dolor non fringilla. Pellentesque sed tincidunt risus. Pellentesque luctus eget diam ut bibendum. Nunc sed luctus justo, et euismod lorem. Sed in odio."
-      />
-
-      <Card
-        user="Usuário 2"
-        date="10/10/23-14:05"
-        postContent="
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae."
-      />
     </section>
   );
 };

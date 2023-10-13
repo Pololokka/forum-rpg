@@ -1,10 +1,11 @@
 import './App.css';
-import Forum from './Pages/Forum/Index';
+
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
     <main>
-      <Forum />
+      <Outlet />
     </main>
   );
 }

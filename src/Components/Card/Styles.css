@@ -9,6 +9,13 @@
   padding: 1em 0;
 }
 
+.forum__card--info-photo {
+  border-radius: 50%;
+  border: var(--inner-cards) solid var(--border-color);
+  width: 8rem;
+  height: 8rem;
+}
+
 .forum__card--info-text {
   margin-bottom: 0.5em;
 }
