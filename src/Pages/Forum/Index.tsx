@@ -1,4 +1,5 @@
 import './Styles.css';
+import { mockedData } from '../../Data/MockedData';
 
 import Card from '../../Components/Card/Index';
 
@@ -6,6 +7,18 @@ const Forum = () => {
   return (
     <section>
       <h1 className="font-title font-big forum__title">Fórum de Discussões</h1>
+
+      {mockedData.map((element, index) => {
+        return (
+          <Card
+            key={index}
+            user={element.user}
+            date={element.date}
+            postContent={element.postContent}
+          />
+        );
+      })}
+
       <Card
         user="Usuário 1"
         date="10/10/23-13:34"
