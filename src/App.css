@@ -31,6 +31,7 @@
 
   /*Border Radius*/
   --card-border-radius: 15px;
+  --input-border-radius: 10px;
 }
 
 /*CSS Global*/
@@ -94,3 +95,28 @@ html {
 }
 
 /*Cards*/
+
+/*Input*/
+
+.input-field {
+  border-radius: var(--input-border-radius);
+  border: var(--inner-cards) solid var(--border-color);
+  padding: 0.5rem;
+}
+
+.input-button-positive {
+  border-radius: var(--input-border-radius);
+  background-color: var(--button-color);
+  padding: 0 2rem;
+  transition: 200ms;
+}
+
+.input-button-positive:hover {
+  transform: scale(1.2);
+}
+
+.input-button-positive:active {
+  transform: scale(0.8);
+}
+
+/*Input*/
