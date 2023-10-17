@@ -5,6 +5,7 @@ import './index.css';
 
 import Login from './Pages/Login/Index.tsx';
 import Forum from './Pages/Forum/Index.tsx';
+import Groups from './Pages/Groups/Index.tsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Login />,
+      },
+      {
+        path: '/groups',
+        element: <Groups />,
       },
       {
         path: '/forum',

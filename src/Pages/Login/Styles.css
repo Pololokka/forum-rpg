@@ -1,5 +1,8 @@
-html {
+.login__header {
   padding: 5em 0;
+}
+
+.login__main {
   display: flex;
   flex-direction: column;
   justify-content: center;

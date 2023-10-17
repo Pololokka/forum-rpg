@@ -1,6 +1,7 @@
 import './Styles.css';
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const defaultLogin: { userName: string; password: string } = {
   userName: '',
@@ -10,29 +11,25 @@ const defaultLogin: { userName: string; password: string } = {
 const Login = () => {
   const [login, setLogin] = useState(defaultLogin);
 
-  const handleLogin = (event: unknown) => {
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(login);
   };
 
-  const handleChangeInput = (
-    event: unknown,
-    state: typeof login,
-    setState: typeof setLogin,
-  ) => {
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name: string = event.target.name;
     const value: string = event.target.value;
 
-    setState({ ...state, [name]: value });
+    setLogin({ ...login, [name]: value });
   };
 
   return (
     <>
-      <header>
+      <header className="login__header">
         <h1 className="font-title font-big">Seja Bem Vindo!</h1>
       </header>
 
-      <main>
+      <main className="login__main">
         <section>
           <form
             className="outer-card form-card"
@@ -47,7 +44,7 @@ const Login = () => {
               id="userName"
               className="font-text font-med input-field"
               value={login.userName || ''}
-              onChange={(event) => handleChangeInput(event, login, setLogin)}
+              onChange={(event) => handleChangeInput(event)}
             />
 
             <label htmlFor="password" className="font-text font-med">
@@ -59,14 +56,16 @@ const Login = () => {
               id="password"
               className="font-text font-med input-field"
               value={login.password || ''}
-              onChange={(event) => handleChangeInput(event, login, setLogin)}
+              onChange={(event) => handleChangeInput(event)}
             />
 
-            <input
-              type="submit"
-              value="Entrar!"
-              className="font-title font-small input-button-positive"
-            />
+            <Link to="/groups">
+              <input
+                type="submit"
+                value="Entrar!"
+                className="font-title font-small input-button-positive"
+              />
+            </Link>
           </form>
         </section>
       </main>

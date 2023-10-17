@@ -3,12 +3,14 @@ import { mockedData } from '../../Data/MockedData';
 
 import Card from '../../Components/Card/Index';
 
+console.log(mockedData);
+
 const Forum = () => {
   return (
     <section>
       <h1 className="font-title font-big forum__title">Fórum de Discussões</h1>
 
-      {mockedData.map((element, index) => {
+      {mockedData[0].posts.map((element, index) => {
         return (
           <Card
             key={index}
