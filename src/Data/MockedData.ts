@@ -2,6 +2,7 @@ type mockedData = [];
 
 export const mockedData = [
   {
+    id: 0,
     groupName: 'mesa teste 1',
     posts: [
       {
@@ -39,6 +40,7 @@ export const mockedData = [
     ],
   },
   {
+    id: 1,
     groupName: 'mesa teste 2',
     posts: [
       {
