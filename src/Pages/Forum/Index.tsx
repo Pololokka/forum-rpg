@@ -48,8 +48,8 @@ const Forum = () => {
           <textarea
             name="newPost"
             id="newPost"
-            cols="1"
-            rows="5"
+            cols={1}
+            rows={5}
             className="font-input font-med input-field new-post__text-area"
             value={newPost || ''}
             onChange={(event) => handleForumChange(event)}
