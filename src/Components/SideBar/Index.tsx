@@ -1,7 +1,9 @@
 import './Styles.css';
 import { Link, useParams } from 'react-router-dom';
 
-type SideBarProps = any;
+type SideBarProps = {
+  arrayData: [];
+};
 
 const SideBar = (props: SideBarProps) => {
   const { id }: any = useParams();
