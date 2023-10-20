@@ -1,0 +1,17 @@
+.container__side-bar {
+  position: fixed;
+  height: 100%;
+  max-width: 10%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--background-color-cards);
+  border-right: var(--outside-border) solid var(--border-color);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5em;
+}

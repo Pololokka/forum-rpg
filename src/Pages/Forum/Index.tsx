@@ -1,7 +1,9 @@
 import './Styles.css';
 import { mockedData } from '../../Data/MockedData';
+import { ForumBarData } from '../../Data/SideBarData';
 
 import Card from '../../Components/Card/Index';
+import SideBar from '../../Components/SideBar/Index';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -22,6 +24,8 @@ const Forum = () => {
   return (
     <>
       <h1 className="font-title font-big forum__title">Fórum de Discussões</h1>
+
+      <SideBar arrayData={ForumBarData} />
 
       <section>
         {mockedData[id].posts.map((element, index) => {
