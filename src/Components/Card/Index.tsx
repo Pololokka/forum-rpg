@@ -23,7 +23,9 @@ const Card = (props: CardProps) => {
       </div>
 
       <div className="forum__card--post">
-        <p className="font-input font-med">{props.postContent}</p>
+        <p className="font-input font-med forum__card--post-text">
+          {props.postContent}
+        </p>
       </div>
     </div>
   );

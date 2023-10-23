@@ -26,3 +26,7 @@
   min-width: 70%;
   text-align: left;
 }
+
+.forum__card--post-text {
+  white-space: pre-line;
+}

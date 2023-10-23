@@ -8,17 +8,29 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 
 const Forum = () => {
-  const [newPost, setNewPost] = useState('');
+  const [newPostText, setNewPostText] = useState('');
+  // const [newPost, setNewPost] = useState({});
 
   const { id }: any = useParams();
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // createNewPost();
+    //mockedData[id].posts.push(newPost);
   };
 
+  // const createNewPost = () => {
+  //   setNewPost({
+  //     photo:
+  //       'https://cdn.discordapp.com/attachments/621499803884584998/1162393253446950983/FmiZhwqXkAA7DO5.jpg?ex=653bc613&is=65295113&hm=be8e275a0bb64a0078f3e0a6e578d24199feb85ce8571a75cc7a3ea7974ac844&',
+  //     user: 'Markola',
+  //     date: new Date(),
+  //     postContent: newPostText,
+  //   });
+  // };
+
   const handleForumChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewPost(event.target.value);
-    console.log(newPost);
+    setNewPostText(event.target.value);
   };
 
   return (
@@ -55,7 +67,7 @@ const Forum = () => {
             cols={1}
             rows={5}
             className="font-input font-med input-field new-post__text-area"
-            value={newPost || ''}
+            value={newPostText || ''}
             onChange={(event) => handleForumChange(event)}
           ></textarea>
 
