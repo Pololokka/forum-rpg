@@ -22,7 +22,7 @@ const Forum = () => {
   };
 
   return (
-    <>
+    <main className="main__forum">
       <h1 className="font-title font-big forum__title">Fórum de Discussões</h1>
 
       <SideBar arrayData={ForumBarData} />
@@ -66,7 +66,7 @@ const Forum = () => {
           />
         </form>
       </section>
-    </>
+    </main>
   );
 };
 

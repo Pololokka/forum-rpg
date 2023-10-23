@@ -2,6 +2,10 @@
   padding: 0.5em 0;
 }
 
+.main__forum {
+  margin-left: 12%;
+}
+
 .form__new-post {
   display: flex;
   flex-direction: column;
