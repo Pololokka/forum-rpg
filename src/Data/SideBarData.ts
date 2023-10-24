@@ -12,10 +12,10 @@ export const ForumBarData = [
   },
   {
     text: 'Avisos do Mestre',
-    path: '/gm',
+    path: '/forum/gm',
   },
   {
     text: 'Leitura Geral',
-    path: '/further-reading',
+    path: '/forum/further-reading',
   },
 ];

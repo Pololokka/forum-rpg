@@ -17,10 +17,13 @@ const SideBar = (props: SideBarProps) => {
             className="link__side-bar"
             to={`${element.path}/${id}`}
           >
-            <p className="font-small font-text">{element.text}</p>{' '}
+            <p className="font-small font-text">{element.text}</p>
           </Link>
         );
       })}
+      <Link className="link__side-bar" to="/groups">
+        <p className="font-small font-text">Mesas</p>
+      </Link>
     </nav>
   );
 };
