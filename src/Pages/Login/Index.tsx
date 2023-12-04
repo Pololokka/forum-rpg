@@ -1,7 +1,7 @@
 import './Styles.css';
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const defaultLogin: { userName: string; password: string } = {
   userName: '',
@@ -10,10 +10,95 @@ const defaultLogin: { userName: string; password: string } = {
 
 const Login = () => {
   const [login, setLogin] = useState(defaultLogin);
+  // let token;
+  const navigate = useNavigate();
 
-  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const loginAcc = async (login: any, page: string) => {
     console.log(login);
+
+    const postData = {
+      email: login.userName,
+      password: login.password,
+    };
+
+    const connect = await fetch(
+      'https://forum-rpg-back.onrender.com/api/auth/login',
+      {
+        method: 'POST',
+        body: JSON.stringify(postData),
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      },
+    );
+
+    if (!connect.ok) {
+      throw new Error('Opa! Não foi possível fazer o login!');
+    } else {
+      //navigate(page);
+      const convertedConnexion = await connect.json();
+      console.log(convertedConnexion);
+      getUserInfo(convertedConnexion.token, convertedConnexion.userId);
+      return convertedConnexion;
+    }
+  };
+
+  const getUserInfo = async (token: string, id: string) => {
+    console.log('entrou no getUserInfo');
+
+    try {
+      const connect = await fetch(
+        `https://forum-rpg-back.onrender.com/api/user/${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!connect.ok) {
+        throw new Error('deu merda aqui');
+      }
+
+      //navigate(page);
+      const convertedConnexion = await connect.json();
+      console.log('resposta do getUserInfo: ' + convertedConnexion);
+      return convertedConnexion;
+    } catch (error) {
+      console.log(error);
+    }
+
+    // const connect = await fetch(
+    //   `https://forum-rpg-back.onrender.com/api/user/${id}`,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-type': 'application/json; charset=UTF-8',
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   },
+    // );
+
+    // console.log('passou do connect');
+
+    // if (!connect.ok) {
+    //   console.log('Opa! Não foi possível fazer o login!');
+    // } else {
+    //   //navigate(page);
+    //   const convertedConnexion = await connect.json();
+    //   console.log('resposta do getUserInfo: ' + convertedConnexion);
+    //   return convertedConnexion;
+    // }
+  };
+
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      loginAcc(login, 'groups');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,13 +144,11 @@ const Login = () => {
               onChange={(event) => handleChangeInput(event)}
             />
 
-            <Link to="/groups">
-              <input
-                type="submit"
-                value="Entrar!"
-                className="font-title font-small input-button-positive"
-              />
-            </Link>
+            <input
+              type="submit"
+              value="Entrar!"
+              className="font-title font-small input-button-positive"
+            />
           </form>
         </section>
       </main>

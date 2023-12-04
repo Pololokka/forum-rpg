@@ -17,7 +17,7 @@ const Groups = () => {
             <div key={index} className="outer-card group__card">
               <p className="font-title font-med">{element.groupName}</p>
 
-              <Link to={`/forum/${element.id}`}>
+              <Link to={`/forum/${element.id}/0`}>
                 <input
                   type="submit"
                   value="Ir Para a Mesa"

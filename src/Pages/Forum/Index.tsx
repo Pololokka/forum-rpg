@@ -11,7 +11,9 @@ const Forum = () => {
   const [newPostText, setNewPostText] = useState('');
   // const [newPost, setNewPost] = useState({});
 
-  const { id }: any = useParams();
+  const { id, page }: any = useParams();
+
+  console.log(page);
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
