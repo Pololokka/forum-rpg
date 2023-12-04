@@ -1,7 +1,7 @@
 import './Styles.css';
 
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const defaultLogin: { userName: string; password: string } = {
   userName: '',
@@ -10,40 +10,43 @@ const defaultLogin: { userName: string; password: string } = {
 
 const Login = () => {
   const [login, setLogin] = useState(defaultLogin);
-  // let token;
   const navigate = useNavigate();
 
-  const loginAcc = async (login: any, page: string) => {
-    console.log(login);
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     const postData = {
       email: login.userName,
       password: login.password,
     };
 
-    const connect = await fetch(
-      'https://forum-rpg-back.onrender.com/api/auth/login',
-      {
-        method: 'POST',
-        body: JSON.stringify(postData),
-        headers: { 'Content-type': 'application/json; charset=UTF-8' },
-      },
-    );
+    try {
+      const connect = await fetch(
+        'https://forum-rpg-back.onrender.com/api/auth/login',
+        {
+          method: 'POST',
+          body: JSON.stringify(postData),
+          headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        },
+      );
 
-    if (!connect.ok) {
-      throw new Error('Opa! Não foi possível fazer o login!');
-    } else {
-      //navigate(page);
+      if (!connect.ok) {
+        throw new Error('Opa! Não foi possível fazer o login!');
+      }
+
       const convertedConnexion = await connect.json();
-      console.log(convertedConnexion);
-      getUserInfo(convertedConnexion.token, convertedConnexion.userId);
+      getUserInfo(
+        convertedConnexion.token,
+        convertedConnexion.userId,
+        '/groups',
+      );
       return convertedConnexion;
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const getUserInfo = async (token: string, id: string) => {
-    console.log('entrou no getUserInfo');
-
+  const getUserInfo = async (token: string, id: string, page: string) => {
     try {
       const connect = await fetch(
         `https://forum-rpg-back.onrender.com/api/user/${id}`,
@@ -57,45 +60,13 @@ const Login = () => {
       );
 
       if (!connect.ok) {
-        throw new Error('deu merda aqui');
+        throw new Error('Acesso inválido, favor tentar novamente mais tarde');
       }
 
-      //navigate(page);
+      navigate(page);
       const convertedConnexion = await connect.json();
-      console.log('resposta do getUserInfo: ' + convertedConnexion);
+      console.log(convertedConnexion);
       return convertedConnexion;
-    } catch (error) {
-      console.log(error);
-    }
-
-    // const connect = await fetch(
-    //   `https://forum-rpg-back.onrender.com/api/user/${id}`,
-    //   {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-type': 'application/json; charset=UTF-8',
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   },
-    // );
-
-    // console.log('passou do connect');
-
-    // if (!connect.ok) {
-    //   console.log('Opa! Não foi possível fazer o login!');
-    // } else {
-    //   //navigate(page);
-    //   const convertedConnexion = await connect.json();
-    //   console.log('resposta do getUserInfo: ' + convertedConnexion);
-    //   return convertedConnexion;
-    // }
-  };
-
-  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    try {
-      loginAcc(login, 'groups');
     } catch (error) {
       console.log(error);
     }
