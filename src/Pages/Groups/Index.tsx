@@ -3,8 +3,11 @@ import './Styles.css';
 import { Link } from 'react-router-dom';
 
 import { mockedData } from '../../Data/MockedData';
+import { UserConsumer } from '../../Contexts/User';
 
 const Groups = () => {
+  const { userInfo }: any = UserConsumer();
+
   return (
     <>
       <header className="header-groups">
@@ -27,6 +30,12 @@ const Groups = () => {
             </div>
           );
         })}
+
+        <input
+          type="button"
+          value="teste de userInfo"
+          onClick={() => console.log(userInfo)}
+        />
       </main>
     </>
   );

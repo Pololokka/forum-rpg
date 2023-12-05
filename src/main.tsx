@@ -10,6 +10,7 @@ import GM from './Pages/Forum/GM/Index.tsx';
 import FurtherReading from './Pages/Forum/FurtherReading/Index.tsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { UserProvider } from './Contexts/User.tsx';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>,
 );

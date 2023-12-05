@@ -15,7 +15,7 @@ const defaultUser: {
 // @ts-ignore
 const UserContext = createContext();
 
-const userProvider = ({ children }: { children: React.ReactNode }) => {
+const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [userInfo, setUserInfo] = useState(defaultUser);
 
   return (
@@ -26,4 +26,4 @@ const userProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 const UserConsumer = () => useContext(UserContext);
-export { UserContext, userProvider, UserConsumer };
+export { UserContext, UserProvider, UserConsumer };

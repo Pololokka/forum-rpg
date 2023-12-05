@@ -2,6 +2,7 @@ import './Styles.css';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserConsumer } from '../../Contexts/User';
 
 const defaultLogin: { userName: string; password: string } = {
   userName: '',
@@ -11,6 +12,7 @@ const defaultLogin: { userName: string; password: string } = {
 const Login = () => {
   const [login, setLogin] = useState(defaultLogin);
   const navigate = useNavigate();
+  const { setUserInfo }: any = UserConsumer();
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -63,9 +65,9 @@ const Login = () => {
         throw new Error('Acesso inválido, favor tentar novamente mais tarde');
       }
 
-      navigate(page);
       const convertedConnexion = await connect.json();
-      console.log(convertedConnexion);
+      setUserInfo(convertedConnexion);
+      navigate(page);
       return convertedConnexion;
     } catch (error) {
       console.log(error);
