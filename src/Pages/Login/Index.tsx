@@ -36,13 +36,13 @@ const Login = () => {
         throw new Error('Opa! Não foi possível fazer o login!');
       }
 
-      const convertedConnexion = await connect.json();
+      const convertedConnection = await connect.json();
       getUserInfo(
-        convertedConnexion.token,
-        convertedConnexion.userId,
+        convertedConnection.token,
+        convertedConnection.userId,
         '/groups',
       );
-      return convertedConnexion;
+      return convertedConnection;
     } catch (error) {
       console.log(error);
     }
@@ -65,10 +65,10 @@ const Login = () => {
         throw new Error('Acesso inválido, favor tentar novamente mais tarde');
       }
 
-      const convertedConnexion = await connect.json();
-      setUserInfo(convertedConnexion);
+      const convertedConnection = await connect.json();
+      setUserInfo(convertedConnection);
       navigate(page);
-      return convertedConnexion;
+      return convertedConnection;
     } catch (error) {
       console.log(error);
     }

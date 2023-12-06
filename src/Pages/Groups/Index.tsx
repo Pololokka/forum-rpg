@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 const Groups = () => {
   const { userInfo }: any = UserConsumer();
-  const [userGroups, setUserGroups] = useState();
+  const [userGroups, setUserGroups] = useState(['']);
 
   const fetchGroups = async () => {
     const postData = {
@@ -29,9 +29,10 @@ const Groups = () => {
         throw new Error('Mesa não encontrada ou usuário sem mesa');
       }
 
-      const convertedConnexion = await connect.json();
-      setUserGroups(convertedConnexion);
-      console.log(userGroups);
+      const convertedConnection = await connect.json();
+      console.log(convertedConnection);
+      setUserGroups(convertedConnection);
+      return convertedConnection;
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +49,7 @@ const Groups = () => {
       </header>
 
       <main className="main-group__cards">
-        {userInfo.groups.map((element: any, index: number) => {
+        {userGroups.map((element: any, index: number) => {
           return (
             <div key={index} className="outer-card group__card">
               <p className="font-title font-med">{element.groupName}</p>
