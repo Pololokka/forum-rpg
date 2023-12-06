@@ -2,11 +2,44 @@ import './Styles.css';
 
 import { Link } from 'react-router-dom';
 
-import { mockedData } from '../../Data/MockedData';
+//import { mockedData } from '../../Data/MockedData';
 import { UserConsumer } from '../../Contexts/User';
+import { useEffect, useState } from 'react';
 
 const Groups = () => {
   const { userInfo }: any = UserConsumer();
+  const [userGroups, setUserGroups] = useState();
+
+  const fetchGroups = async () => {
+    const postData = {
+      groups: userInfo.groups,
+    };
+
+    try {
+      const connect = await fetch(
+        'https://forum-rpg-back.onrender.com/api/group/user',
+        {
+          method: 'POST',
+          body: JSON.stringify(postData),
+          headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        },
+      );
+
+      if (!connect.ok) {
+        throw new Error('Mesa não encontrada ou usuário sem mesa');
+      }
+
+      const convertedConnexion = await connect.json();
+      setUserGroups(convertedConnexion);
+      console.log(userGroups);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroups();
+  }, []);
 
   return (
     <>
@@ -15,12 +48,12 @@ const Groups = () => {
       </header>
 
       <main className="main-group__cards">
-        {mockedData.map((element, index) => {
+        {userInfo.groups.map((element: any, index: number) => {
           return (
             <div key={index} className="outer-card group__card">
               <p className="font-title font-med">{element.groupName}</p>
 
-              <Link to={`/forum/${element.id}/0`}>
+              <Link to={`/forum/${element._id}/0`}>
                 <input
                   type="submit"
                   value="Ir Para a Mesa"
