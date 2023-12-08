@@ -2,7 +2,6 @@ import './Styles.css';
 
 import { Link } from 'react-router-dom';
 
-//import { mockedData } from '../../Data/MockedData';
 import { UserConsumer } from '../../Contexts/User';
 import { useEffect, useState } from 'react';
 
@@ -30,7 +29,6 @@ const Groups = () => {
       }
 
       const convertedConnection = await connect.json();
-      console.log(convertedConnection);
       setUserGroups(convertedConnection);
       return convertedConnection;
     } catch (error) {

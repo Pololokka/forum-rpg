@@ -1,39 +1,66 @@
 import './Styles.css';
-import { mockedData } from '../../Data/MockedData';
 import { ForumBarData } from '../../Data/SideBarData';
 
 import Card from '../../Components/Card/Index';
 import SideBar from '../../Components/SideBar/Index';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+const defaultPost: {
+  profilePic: string;
+  user: string;
+  createdAt: string;
+  postContent: string;
+} = {
+  profilePic: '',
+  user: '',
+  createdAt: '',
+  postContent: '',
+};
 
 const Forum = () => {
   const [newPostText, setNewPostText] = useState('');
-  // const [newPost, setNewPost] = useState({});
+  const [posts, setPosts] = useState([defaultPost]);
 
-  const { id, page }: any = useParams();
+  const { id }: any = useParams();
 
-  console.log(page);
+  const getForumPosts = async (forumId: string) => {
+    try {
+      const connect = await fetch(
+        `https://forum-rpg-back.onrender.com/api/forum/posts/${forumId}`,
+        {
+          method: 'GET',
+          headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        },
+      );
+
+      if (!connect.ok) {
+        throw new Error('Posts não encontrados');
+      }
+
+      const convertedConnection = await connect.json();
+      setPosts(convertedConnection);
+      return convertedConnection;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // createNewPost();
-    //mockedData[id].posts.push(newPost);
   };
 
   // const createNewPost = () => {
-  //   setNewPost({
-  //     photo:
-  //       'https://cdn.discordapp.com/attachments/621499803884584998/1162393253446950983/FmiZhwqXkAA7DO5.jpg?ex=653bc613&is=65295113&hm=be8e275a0bb64a0078f3e0a6e578d24199feb85ce8571a75cc7a3ea7974ac844&',
-  //     user: 'Markola',
-  //     date: new Date(),
-  //     postContent: newPostText,
-  //   });
+
   // };
 
   const handleForumChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewPostText(event.target.value);
   };
+
+  useEffect(() => {
+    getForumPosts(id);
+  }, []);
 
   return (
     <main className="main__forum">
@@ -42,13 +69,13 @@ const Forum = () => {
       <SideBar arrayData={ForumBarData} />
 
       <section>
-        {mockedData[id].posts.map((element, index) => {
+        {posts.map((element, index) => {
           return (
             <Card
               key={index}
-              photo={element.photo}
+              photo={element.profilePic}
               user={element.user}
-              date={element.date}
+              date={element.createdAt}
               postContent={element.postContent}
             />
           );
