@@ -75,7 +75,11 @@ const Forum = () => {
               key={index}
               photo={element.profilePic}
               user={element.user}
-              date={element.createdAt}
+              date={element.createdAt
+                .split('T')[0]
+                .split('-')
+                .reverse()
+                .join('-')}
               postContent={element.postContent}
             />
           );
