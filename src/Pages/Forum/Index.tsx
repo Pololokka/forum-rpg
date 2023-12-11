@@ -5,6 +5,7 @@ import Card from '../../Components/Card/Index';
 import SideBar from '../../Components/SideBar/Index';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { UserConsumer } from '../../Contexts/User';
 
 const defaultPost: {
   profilePic: string;
@@ -19,6 +20,7 @@ const defaultPost: {
 };
 
 const Forum = () => {
+  const { userInfo }: any = UserConsumer();
   const [newPostText, setNewPostText] = useState('');
   const [posts, setPosts] = useState([defaultPost]);
 
@@ -48,11 +50,43 @@ const Forum = () => {
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    createNewPost(newPostText);
+    setNewPostText('');
+    getForumPosts(id);
   };
 
-  // const createNewPost = () => {
+  const createNewPost = async (post: string) => {
+    const postData = {
+      user: userInfo.name,
+      profilePic: userInfo.img,
+      group: id,
+      postContent: post,
+    };
 
-  // };
+    try {
+      const connect = await fetch(
+        `https://forum-rpg-back.onrender.com/api/forum`,
+        {
+          method: 'POST',
+          body: JSON.stringify(postData),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        },
+      );
+
+      if (!connect.ok) {
+        throw new Error(
+          'Não foi possível fazer o post, tente novamente mais tarde',
+        );
+      }
+
+      const convertedConnection = await connect.json();
+      return convertedConnection;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleForumChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewPostText(event.target.value);

@@ -4,11 +4,13 @@ const defaultUser: {
   email: string;
   groups: [string];
   name: string;
+  img: string;
   id: string;
 } = {
   email: '',
   groups: [''],
   name: '',
+  img: '',
   id: '',
 };
 

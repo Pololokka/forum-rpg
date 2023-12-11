@@ -66,6 +66,7 @@ const Login = () => {
       }
 
       const convertedConnection = await connect.json();
+      console.log(convertedConnection);
       setUserInfo(convertedConnection);
       navigate(page);
       return convertedConnection;
