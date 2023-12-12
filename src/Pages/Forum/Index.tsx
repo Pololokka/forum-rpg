@@ -26,33 +26,18 @@ const Forum = () => {
 
   const { id }: any = useParams();
 
-  const getForumPosts = async (forumId: string) => {
-    try {
-      const connect = await fetch(
-        `https://forum-rpg-back.onrender.com/api/forum/posts/${forumId}`,
-        {
-          method: 'GET',
-          headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        },
-      );
-
-      if (!connect.ok) {
-        throw new Error('Posts não encontrados');
-      }
-
-      const convertedConnection = await connect.json();
-      setPosts(convertedConnection);
-      return convertedConnection;
-    } catch (error) {
-      console.log(error);
-    }
+  const getForumPosts = async (url: string) => {
+    fetch(`${url}`)
+      .then((res) => res.json())
+      .then((data) => setPosts(data))
+      .catch((error) => console.log(error));
   };
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     createNewPost(newPostText);
     setNewPostText('');
-    getForumPosts(id);
+    // getForumPosts(id);
   };
 
   const createNewPost = async (post: string) => {
@@ -93,7 +78,8 @@ const Forum = () => {
   };
 
   useEffect(() => {
-    getForumPosts(id);
+    getForumPosts(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`);
+    // useFetch(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`);
   }, []);
 
   return (
@@ -103,7 +89,7 @@ const Forum = () => {
       <SideBar arrayData={ForumBarData} />
 
       <section>
-        {posts.map((element, index) => {
+        {posts.map((element: any, index: number) => {
           return (
             <Card
               key={index}
