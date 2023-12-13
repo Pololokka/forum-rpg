@@ -21,7 +21,9 @@ function useFetch(url: string): [postType[], any] {
     fetchData();
   }, [url]);
 
-  return [data, fetchData];
+  const reFetch = () => fetchData();
+
+  return [data, { reFetch }];
 }
 
 export default useFetch;

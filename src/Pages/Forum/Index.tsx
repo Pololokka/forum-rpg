@@ -15,7 +15,7 @@ const Forum = () => {
 
   const [newPostText, setNewPostText] = useState('');
 
-  const [postTest, reFetch] = useFetch(
+  const [postTest, { reFetch }] = useFetch(
     `https://forum-rpg-back.onrender.com/api/forum/posts/${id}`,
   );
 
