@@ -4,83 +4,37 @@ import { ForumBarData } from '../../Data/SideBarData';
 import Card from '../../Components/Card/Index';
 import SideBar from '../../Components/SideBar/Index';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { UserConsumer } from '../../Contexts/User';
-
-const defaultPost: {
-  profilePic: string;
-  user: string;
-  createdAt: string;
-  postContent: string;
-} = {
-  profilePic: '',
-  user: '',
-  createdAt: '',
-  postContent: '',
-};
+import { createNewPost } from '../../Func/createNewPost';
+import useFetch from '../../Hooks/useFetch';
 
 const Forum = () => {
-  const { userInfo }: any = UserConsumer();
-  const [newPostText, setNewPostText] = useState('');
-  const [posts, setPosts] = useState([defaultPost]);
-
   const { id }: any = useParams();
+  const { userInfo }: any = UserConsumer();
 
-  const getForumPosts = async (url: string) => {
-    fetch(`${url}`)
-      .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((error) => console.log(error));
-  };
+  const [newPostText, setNewPostText] = useState('');
+
+  const [postTest, reFetch] = useFetch(
+    `https://forum-rpg-back.onrender.com/api/forum/posts/${id}`,
+  );
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    createNewPost(newPostText);
+    createNewPost(
+      userInfo,
+      id,
+      newPostText,
+      `https://forum-rpg-back.onrender.com/api/forum`,
+    ).then(() =>
+      reFetch(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`),
+    );
     setNewPostText('');
-    // getForumPosts(id);
-  };
-
-  const createNewPost = async (post: string) => {
-    const postData = {
-      user: userInfo.name,
-      profilePic: userInfo.img,
-      group: id,
-      postContent: post,
-    };
-
-    try {
-      const connect = await fetch(
-        `https://forum-rpg-back.onrender.com/api/forum`,
-        {
-          method: 'POST',
-          body: JSON.stringify(postData),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
-        },
-      );
-
-      if (!connect.ok) {
-        throw new Error(
-          'Não foi possível fazer o post, tente novamente mais tarde',
-        );
-      }
-
-      const convertedConnection = await connect.json();
-      return convertedConnection;
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleForumChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewPostText(event.target.value);
   };
-
-  useEffect(() => {
-    getForumPosts(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`);
-    // useFetch(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`);
-  }, []);
 
   return (
     <main className="main__forum">
@@ -89,7 +43,7 @@ const Forum = () => {
       <SideBar arrayData={ForumBarData} />
 
       <section>
-        {posts.map((element: any, index: number) => {
+        {postTest.map((element: any, index: number) => {
           return (
             <Card
               key={index}

@@ -7,19 +7,21 @@ export type postType = {
   postContent: string;
 };
 
-const useFetch = (url: string): [postType[]] | [null] => {
-  const [data, setData] = useState(null);
+function useFetch(url: string): [postType[], any] {
+  const [data, setData] = useState([]);
 
-  useEffect(() => {
+  const fetchData = () => {
     fetch(`${url}`)
       .then((res) => res.json())
       .then((data) => setData(data))
       .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [url]);
-  console.log(data);
-  return [data];
-};
+
+  return [data, fetchData];
+}
 
 export default useFetch;
-
-// não funciona, e eu não sei como fazer funcionar agora
