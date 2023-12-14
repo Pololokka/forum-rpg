@@ -4,10 +4,10 @@ import { ForumBarData } from '../../Data/SideBarData';
 import Card from '../../Components/Card/Index';
 import SideBar from '../../Components/SideBar/Index';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserConsumer } from '../../Contexts/User';
-import { createNewPost } from '../../Func/createNewPost';
 import useFetch from '../../Hooks/useFetch';
+import useCreatePosts from '../../Hooks/useCreatePost';
 
 const Forum = () => {
   const { id }: any = useParams();
@@ -15,26 +15,32 @@ const Forum = () => {
 
   const [newPostText, setNewPostText] = useState('');
 
-  const [postTest, { reFetch }] = useFetch(
+  const [posts, { reFetch }] = useFetch(
     `https://forum-rpg-back.onrender.com/api/forum/posts/${id}`,
+  );
+  const [createPost] = useCreatePosts(
+    userInfo,
+    id,
+    newPostText,
+    `https://forum-rpg-back.onrender.com/api/forum`,
   );
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    createNewPost(
-      userInfo,
-      id,
-      newPostText,
-      `https://forum-rpg-back.onrender.com/api/forum`,
-    ).then(() =>
-      reFetch(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`),
-    );
+    createPost();
     setNewPostText('');
   };
 
   const handleForumChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewPostText(event.target.value);
   };
+
+  useEffect(() => {
+    setTimeout(
+      reFetch(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`),
+      500,
+    );
+  }, [newPostText]);
 
   return (
     <main className="main__forum">
@@ -43,7 +49,7 @@ const Forum = () => {
       <SideBar arrayData={ForumBarData} />
 
       <section>
-        {postTest.map((element: any, index: number) => {
+        {posts.map((element: any, index: number) => {
           return (
             <Card
               key={index}
