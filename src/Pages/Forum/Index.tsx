@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { UserConsumer } from '../../Contexts/User';
 import useFetch from '../../Hooks/useFetch';
-import useCreatePosts from '../../Hooks/useCreatePost';
+// import useCreatePosts from '../../Hooks/useCreatePost';
 
 const Forum = () => {
   const { id }: any = useParams();
@@ -15,19 +15,18 @@ const Forum = () => {
 
   const [newPostText, setNewPostText] = useState('');
 
-  const [posts, { reFetch }] = useFetch(
+  const [posts, { reFetch, postData }] = useFetch(
     `https://forum-rpg-back.onrender.com/api/forum/posts/${id}`,
-  );
-  const [createPost] = useCreatePosts(
-    userInfo,
-    id,
-    newPostText,
-    `https://forum-rpg-back.onrender.com/api/forum`,
   );
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    createPost();
+    postData(
+      userInfo,
+      id,
+      newPostText,
+      `https://forum-rpg-back.onrender.com/api/forum`,
+    );
     setNewPostText('');
   };
 
@@ -36,10 +35,7 @@ const Forum = () => {
   };
 
   useEffect(() => {
-    setTimeout(
-      reFetch(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`),
-      500,
-    );
+    reFetch(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`);
   }, [newPostText]);
 
   return (
