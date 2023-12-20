@@ -7,13 +7,17 @@ export type postType = {
   postContent: string;
 };
 
-function useFetch(url: string): [postType[], any] {
+function useFetch(url: string): [postType[], number, any] {
   const [data, setData] = useState([]);
+  const [pages, setPages] = useState(0);
 
   const fetchData = () => {
     fetch(`${url}`)
       .then((res) => res.json())
-      .then((data) => setData(data))
+      .then((data) => {
+        setData(data.payload);
+        setPages(data.totalPages);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -44,7 +48,7 @@ function useFetch(url: string): [postType[], any] {
 
   const reFetch = () => fetchData();
 
-  return [data, { reFetch, postData }];
+  return [data, pages, { reFetch, postData }];
 }
 
 export default useFetch;

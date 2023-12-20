@@ -19,3 +19,14 @@
   width: 80%;
   height: 50%;
 }
+
+.page-numbers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.number__card {
+  cursor: pointer;
+  margin: 0.2em;
+}

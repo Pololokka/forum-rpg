@@ -7,16 +7,17 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { UserConsumer } from '../../Contexts/User';
 import useFetch from '../../Hooks/useFetch';
-// import useCreatePosts from '../../Hooks/useCreatePost';
 
 const Forum = () => {
   const { id }: any = useParams();
   const { userInfo }: any = UserConsumer();
 
   const [newPostText, setNewPostText] = useState('');
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(10);
 
-  const [posts, { reFetch, postData }] = useFetch(
-    `https://forum-rpg-back.onrender.com/api/forum/posts/${id}`,
+  const [posts, pages, { reFetch, postData }] = useFetch(
+    `https://forum-rpg-back.onrender.com/api/forum/posts/${id}?offset=${offset}&limit=${limit}`,
   );
 
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,7 +36,9 @@ const Forum = () => {
   };
 
   useEffect(() => {
-    reFetch(`https://forum-rpg-back.onrender.com/api/forum/posts/${id}`);
+    reFetch(
+      `https://forum-rpg-back.onrender.com/api/forum/posts/${id}?offset=${offset}&limit=${limit}`,
+    );
   }, [newPostText]);
 
   return (
@@ -60,6 +63,36 @@ const Forum = () => {
             />
           );
         })}
+      </section>
+
+      <section className="page-numbers">
+        <p
+          className="font-text font-small outer-card number__card"
+          onClick={() => setOffset(offset - 1 * 10)}
+        >
+          {'<'}
+        </p>
+
+        <p
+          className="font-text font-small outer-card number__card"
+          onClick={() => setOffset(0 * 10)}
+        >
+          {0 + 1}
+        </p>
+
+        <p
+          className="font-text font-small outer-card number__card"
+          onClick={() => setOffset(1 * 10)}
+        >
+          {1 + 1}
+        </p>
+
+        <p
+          className="font-text font-small outer-card number__card"
+          onClick={() => setOffset(offset + 1 * 10)}
+        >
+          {'>'}
+        </p>
       </section>
 
       <section>
