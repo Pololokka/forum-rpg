@@ -21,6 +21,10 @@ const Forum = () => {
     `https://forum-rpg-back.onrender.com/api/forum/posts/${id}?offset=${offset}&limit=${limit}`,
   );
 
+  console.log(
+    `https://forum-rpg-back.onrender.com/api/forum/posts/${id}?offset=${offset}&limit=${limit}`,
+  );
+
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     postData(

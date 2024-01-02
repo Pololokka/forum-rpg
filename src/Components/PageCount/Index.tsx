@@ -12,7 +12,7 @@ const PageCount = (props: PageCountProps) => {
     } else if (props.type == 'next') {
       props.setOffset(props.offset + 1 * 10);
     } else {
-      props.setOffset(parseInt(props.content) - 1 * 10);
+      props.setOffset((parseInt(props.content) - 1) * 10);
     }
   };
 
