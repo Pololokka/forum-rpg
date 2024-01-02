@@ -7,9 +7,10 @@ export type postType = {
   postContent: string;
 };
 
-function useFetch(url: string): [postType[], number, any] {
+function useFetch(url: string): [postType[], number, number[], any] {
   const [data, setData] = useState([]);
   const [pages, setPages] = useState(0);
+  const [pageArray, setPageArray] = useState([0]);
 
   const fetchData = () => {
     fetch(`${url}`)
@@ -17,6 +18,12 @@ function useFetch(url: string): [postType[], number, any] {
       .then((data) => {
         setData(data.payload);
         setPages(data.totalPages);
+
+        let arr = [];
+        for (let i = 0; i < data.totalPages; i++) {
+          arr.push(i + 1);
+        }
+        setPageArray(arr);
       })
       .catch((error) => console.log(error));
   };
@@ -48,7 +55,7 @@ function useFetch(url: string): [postType[], number, any] {
 
   const reFetch = () => fetchData();
 
-  return [data, pages, { reFetch, postData }];
+  return [data, pages, pageArray, { reFetch, postData }];
 }
 
 export default useFetch;

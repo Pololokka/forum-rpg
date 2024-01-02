@@ -3,8 +3,9 @@ import { ForumBarData } from '../../Data/SideBarData';
 
 import Card from '../../Components/Card/Index';
 import SideBar from '../../Components/SideBar/Index';
+import PageCount from '../../Components/PageCount/Index';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { UserConsumer } from '../../Contexts/User';
 import useFetch from '../../Hooks/useFetch';
 
@@ -16,7 +17,7 @@ const Forum = () => {
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
 
-  const [posts, pages, { reFetch, postData }] = useFetch(
+  const [posts, pages, pageArray, { reFetch, postData }] = useFetch(
     `https://forum-rpg-back.onrender.com/api/forum/posts/${id}?offset=${offset}&limit=${limit}`,
   );
 
@@ -34,12 +35,6 @@ const Forum = () => {
   const handleForumChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewPostText(event.target.value);
   };
-
-  useEffect(() => {
-    reFetch(
-      `https://forum-rpg-back.onrender.com/api/forum/posts/${id}?offset=${offset}&limit=${limit}`,
-    );
-  }, [newPostText]);
 
   return (
     <main className="main__forum">
@@ -65,35 +60,39 @@ const Forum = () => {
         })}
       </section>
 
-      <section className="page-numbers">
-        <p
-          className="font-text font-small outer-card number__card"
-          onClick={() => setOffset(offset - 1 * 10)}
-        >
-          {'<'}
-        </p>
+      {pages > 1 && (
+        <section className="page-numbers">
+          {offset != 0 && (
+            <PageCount
+              type="prev"
+              content="<"
+              offset={offset}
+              setOffset={setOffset}
+            />
+          )}
 
-        <p
-          className="font-text font-small outer-card number__card"
-          onClick={() => setOffset(0 * 10)}
-        >
-          {0 + 1}
-        </p>
+          {pageArray?.map((element: any, index: number) => {
+            return (
+              <PageCount
+                type="number"
+                content={element}
+                offset={offset}
+                setOffset={setOffset}
+                key={index}
+              />
+            );
+          })}
 
-        <p
-          className="font-text font-small outer-card number__card"
-          onClick={() => setOffset(1 * 10)}
-        >
-          {1 + 1}
-        </p>
-
-        <p
-          className="font-text font-small outer-card number__card"
-          onClick={() => setOffset(offset + 1 * 10)}
-        >
-          {'>'}
-        </p>
-      </section>
+          {offset != (pages - 1) * 10 && (
+            <PageCount
+              type="next"
+              content=">"
+              offset={offset}
+              setOffset={setOffset}
+            />
+          )}
+        </section>
+      )}
 
       <section>
         <form
