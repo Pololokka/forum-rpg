@@ -4,6 +4,7 @@ import { ForumBarData } from '../../Data/SideBarData';
 import Card from '../../Components/Card/Index';
 import SideBar from '../../Components/SideBar/Index';
 import PageCount from '../../Components/PageCount/Index';
+import LimitChanger from '../../Components/LimitChanger/Index';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { UserConsumer } from '../../Contexts/User';
@@ -21,10 +22,6 @@ const Forum = () => {
     `https://forum-rpg-back.onrender.com/api/forum/posts/${id}?offset=${offset}&limit=${limit}`,
   );
 
-  console.log(
-    `https://forum-rpg-back.onrender.com/api/forum/posts/${id}?offset=${offset}&limit=${limit}`,
-  );
-
   const handleSubmitPost = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     postData(
@@ -34,6 +31,8 @@ const Forum = () => {
       `https://forum-rpg-back.onrender.com/api/forum`,
     );
     setNewPostText('');
+    setOffset((pages - 1) * 10);
+    reFetch();
   };
 
   const handleForumChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -47,7 +46,7 @@ const Forum = () => {
       <SideBar arrayData={ForumBarData} />
 
       <section>
-        {posts.map((element: any, index: number) => {
+        {posts?.map((element: any, index: number) => {
           return (
             <Card
               key={index}
@@ -71,6 +70,7 @@ const Forum = () => {
               type="prev"
               content="<"
               offset={offset}
+              limit={limit}
               setOffset={setOffset}
             />
           )}
@@ -81,6 +81,7 @@ const Forum = () => {
                 type="number"
                 content={element}
                 offset={offset}
+                limit={limit}
                 setOffset={setOffset}
                 key={index}
               />
@@ -92,11 +93,18 @@ const Forum = () => {
               type="next"
               content=">"
               offset={offset}
+              limit={limit}
               setOffset={setOffset}
             />
           )}
         </section>
       )}
+
+      <section>
+        <LimitChanger content="10" limit={limit} setLimit={setLimit} />
+        <LimitChanger content="20" limit={limit} setLimit={setLimit} />
+        <LimitChanger content="30" limit={limit} setLimit={setLimit} />
+      </section>
 
       <section>
         <form
