@@ -20,14 +20,14 @@
   height: 50%;
 }
 
-.page-numbers {
+.changers-numbers {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
 
-.number__card {
+.changers__card {
   cursor: pointer;
   margin: 0.2em;
 }

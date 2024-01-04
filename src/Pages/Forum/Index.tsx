@@ -64,7 +64,7 @@ const Forum = () => {
       </section>
 
       {pages > 1 && (
-        <section className="page-numbers">
+        <section className="changers-numbers">
           {offset != 0 && (
             <PageCount
               type="prev"
@@ -100,7 +100,8 @@ const Forum = () => {
         </section>
       )}
 
-      <section>
+      <section className="changers-numbers">
+        <p className="font-text font-med">Posts por página: </p>
         <LimitChanger content="10" limit={limit} setLimit={setLimit} />
         <LimitChanger content="20" limit={limit} setLimit={setLimit} />
         <LimitChanger content="30" limit={limit} setLimit={setLimit} />

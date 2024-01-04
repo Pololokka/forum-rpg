@@ -19,7 +19,7 @@ const PageCount = (props: PageCountProps) => {
 
   return (
     <p
-      className="font-text font-small outer-card number__card"
+      className="font-text font-small outer-card changers__card"
       onClick={pageChanger}
     >
       {props.content}
