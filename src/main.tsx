@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         element: <Groups />,
       },
       {
-        path: '/forum/:id/:page',
+        path: '/forum/:id',
         element: <Forum />,
       },
       {
