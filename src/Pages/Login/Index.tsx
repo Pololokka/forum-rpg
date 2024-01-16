@@ -1,6 +1,6 @@
 import './Styles.css';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserConsumer } from '../../Contexts/User';
 
@@ -13,21 +13,6 @@ const Login = () => {
   const [login, setLogin] = useState(defaultLogin);
   const navigate = useNavigate();
   const { setUserInfo }: any = UserConsumer();
-
-  const paginate = (page: number) => {
-    const totalPosts = 40;
-
-    const totalPages = totalPosts / 10;
-    console.log('páginas: ', totalPages);
-
-    if (page <= totalPages) {
-      const minPost = (page - 1) * 10 + 1;
-      const maxPost = minPost + 9;
-
-      console.log('post mínimo: ', minPost);
-      console.log('post máximo: ', maxPost);
-    }
-  };
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,7 +66,6 @@ const Login = () => {
       }
 
       const convertedConnection = await connect.json();
-      console.log(convertedConnection);
       setUserInfo(convertedConnection);
       navigate(page);
       return convertedConnection;
@@ -96,10 +80,6 @@ const Login = () => {
 
     setLogin({ ...login, [name]: value });
   };
-
-  useEffect(() => {
-    paginate(5);
-  }, []);
 
   return (
     <>
