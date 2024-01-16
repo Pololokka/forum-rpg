@@ -62,12 +62,6 @@ const Groups = () => {
             </div>
           );
         })}
-
-        <input
-          type="button"
-          value="teste de userInfo"
-          onClick={() => console.log(userInfo)}
-        />
       </main>
     </>
   );
