@@ -1,42 +1,122 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Inknut+Antiqua:wght@600&family=Roboto+Slab&display=swap');
+
+/*CSS Global*/
+
+:root {
+  /*Font Config*/
+  --font-title: 'Inknut Antiqua', serif;
+  --font-text: 'Roboto Slab', serif;
+  --font-input: 'Indie Flower', cursive;
+
+  --font-big: 3rem;
+  --font-med: 2rem;
+  --font-small: 1.5rem;
+
+  --font-color: #000045;
+  --font-color-darkmode: #fcfcdb;
+  /*Font Config*/
+
+  /*Colors*/
+  --background-color: #fcfcdb;
+  --background-color-cards: #ebd5b3;
+  --border-color: #b54eb5;
+  --button-color: #b54eb5;
+  --separation-line-color: #b54eb5;
+  --button-color-negative: #e02345;
+
+  /*Border Thickness*/
+  --outside-border: 5px;
+  --inner-cards: 3px;
+  --separation-line-thickness: 3px;
+
+  /*Border Radius*/
+  --card-border-radius: 15px;
+  --input-border-radius: 10px;
+}
+
+/*CSS Global*/
+
+html {
+  background-color: var(--background-color);
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/*Fonts*/
+
+.font-title {
+  font-family: var(--font-title);
+  color: var(--font-color);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.font-text {
+  font-family: var(--font-text);
+  color: var(--font-color);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.font-input {
+  font-family: var(--font-input);
+  color: var(--font-color);
 }
 
-.card {
-  padding: 2em;
+.font-big {
+  font-size: var(--font-big);
 }
 
-.read-the-docs {
-  color: #888;
+.font-med {
+  font-size: var(--font-med);
 }
+
+.font-small {
+  font-size: var(--font-small);
+}
+
+/*Fonts*/
+
+/*Cards*/
+
+.outer-card {
+  background-color: var(--background-color-cards);
+  border: var(--outside-border) solid var(--border-color);
+  border-radius: var(--card-border-radius);
+  padding: 1em;
+  margin: 1em;
+}
+
+.inner-card {
+  border: var(--inner-cards) solid var(--border-color);
+  border-radius: var(--card-border-radius);
+  padding: 1em;
+  margin: 1em;
+}
+
+.separation-line {
+  border-right: var(--separation-line-thickness) solid
+    var(--separation-line-color);
+}
+
+/*Cards*/
+
+/*Input*/
+
+.input-field {
+  border-radius: var(--input-border-radius);
+  border: var(--inner-cards) solid var(--border-color);
+  padding: 0.5rem;
+}
+
+.input-button-positive {
+  border-radius: var(--input-border-radius);
+  background-color: var(--button-color);
+  padding: 0 2rem;
+  transition: 200ms;
+}
+
+.input-button-positive:hover {
+  transform: scale(1.2);
+}
+
+.input-button-positive:active {
+  transform: scale(0.8);
+}
+
+/*Input*/

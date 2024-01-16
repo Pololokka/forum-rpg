@@ -1,0 +1,20 @@
+.header-groups {
+  padding: 3em 0;
+}
+
+.main-group__cards {
+  padding: 0 1em;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+}
+
+.group__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  padding: 2em;
+}
